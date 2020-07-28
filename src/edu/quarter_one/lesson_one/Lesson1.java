@@ -5,8 +5,9 @@ public class Lesson1 {
     public static void main(String[] args) {
         System.out.println(taskOne(4,5,8,3));
         System.out.println(taskTwo(7, 14));
-        System.out.println(taskThree(0));
+        System.out.println(taskThree(17));
         System.out.println(taskFour("Вася"));
+        System.out.println(taskFive();
     }
 
     //Task 1
@@ -35,6 +36,22 @@ public class Lesson1 {
     //*Написать метод, который определяет является ли год високосным.
     // Каждый 4-й год является високосным, кроме каждого 100-го, при этом каждый 400-й – високосный.
     // Для проверки работы вывести результаты работы метода в консоль.
+
+    //Task 5
+    public static String taskFive(int a) {
+        float a1 = a / 4f;
+        int a2 = a / 4;
+        float b1 = a / 100f;
+        int b2 = a / 100;
+        float c1 = a / 400f;
+        int c2 = a / 400;
+
+
+        if (a1 == a2 & b1 != b2 & c1 == c2){
+            //високосный
+        }
+        return a + " год является високосным";
+    }
 
 }
 
