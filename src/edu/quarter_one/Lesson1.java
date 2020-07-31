@@ -1,4 +1,4 @@
-package edu.quarter_one.lesson_one;
+package edu.quarter_one;
 
 public class Lesson1 {
 
