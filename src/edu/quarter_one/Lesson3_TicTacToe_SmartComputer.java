@@ -65,28 +65,73 @@ public class Lesson3_TicTacToe_SmartComputer {
     private static void aiTurn() {
 
         // проверка по горизонтали
-        int counter;
-        int f = 0;
+        int counter1;
+        int f1 = 0;
         for (int xx = 0; xx < fieldSizeX; xx++) {
-            counter = 0;
+            counter1 = 0;
             for (int yy = 0; yy < fieldSizeY; yy++) {
                 if (field[xx][yy] == DOT_HUMAN)
                 {
-                    counter++;
+                    counter1++;
                 }
-                if (counter == (fieldSizeX - 1)) {
+                if (counter1 == (fieldSizeX - 1)) {
                     for (int yyy = 0; yyy < fieldSizeY; yyy++) {
                         if (field[xx][yyy] == DOT_EMPTY)
                         {
                             field[xx][yyy] = DOT_AI;
-                            f = 1;
+                            f1 = 1;
                         }
                     }
                 }
             }
         }
 
-        if (f == 0) {
+        // проверка по вертиткали
+        int counter2;
+        int f2 = 0;
+        for (int yy = 0; yy < fieldSizeX; yy++) {
+            counter2 = 0;
+            for (int xx = 0; xx < fieldSizeY; xx++) {
+                if (field[xx][yy] == DOT_HUMAN)
+                {
+                    counter2++;
+                }
+                if (counter2 == (fieldSizeX - 1)) {
+                    for (int xxx = 0; xxx < fieldSizeY; xxx++) {
+                        if (field[xxx][yy] == DOT_EMPTY)
+                        {
+                            field[xxx][yy] = DOT_AI;
+                            f2 = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        // проверка по диагонали1
+        int counter3 = 0;
+        int f3 = 0;
+        int x_new = 0;
+        int y_new = 0;
+        for (int xx = 0; xx < fieldSizeX; xx++) {
+            for (int yy = fieldSizeY-1-xx; yy >= 0; yy--) {
+                if (field[xx][yy] == DOT_HUMAN)
+                {
+                    counter3++;
+                }
+                if (field[xx][yy] == DOT_EMPTY)
+                {
+                    x_new = xx;
+                    y_new = yy;
+                }
+                if (counter3 == (fieldSizeX - 1)) {
+                    f3 = 1;
+                    field[x_new][y_new] = DOT_AI;
+                }
+            }
+        }
+
+        if (f1 == 0 && f2 == 0 && f3 == 0) {
             int x;
             int y;
             do {
