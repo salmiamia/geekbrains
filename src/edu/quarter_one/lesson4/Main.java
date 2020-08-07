@@ -62,5 +62,4 @@ public class Main {
             System.out.println("#" + listOfEmployees[i].getId() + " " + listOfEmployees[i].getFullName());
         }
     }
-    
 }
