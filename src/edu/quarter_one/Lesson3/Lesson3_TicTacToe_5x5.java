@@ -1,9 +1,9 @@
-package edu.quarter_one;
+package edu.quarter_one.Lesson3;
 
 import java.util.Random;
 import java.util.Scanner;
 
-public class Lesson3_TicTacToe_SmartComputer {
+public class Lesson3_TicTacToe_5x5 {
 
     private static final char DOT_HUMAN = 'X';
     private static final char DOT_AI = 'O';
@@ -12,11 +12,13 @@ public class Lesson3_TicTacToe_SmartComputer {
     private static final Random RANDOM = new Random();
     private static int fieldSizeY;
     private static int fieldSizeX;
+    private static int numToWin;
     private static char[][] field;
 
     private static void initField() {
-        fieldSizeX = 3;
-        fieldSizeY = 3;
+        fieldSizeX = 5;
+        fieldSizeY = 5;
+        numToWin = 4;
         field = new char[fieldSizeY][fieldSizeX];
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
@@ -63,85 +65,13 @@ public class Lesson3_TicTacToe_SmartComputer {
     }
 
     private static void aiTurn() {
-
-        // проверка по горизонтали
-        int counter1;
-        int f1 = 0;
-        for (int xx = 0; xx < fieldSizeX; xx++) {
-            counter1 = 0;
-            for (int yy = 0; yy < fieldSizeY; yy++) {
-                if (field[xx][yy] == DOT_HUMAN)
-                {
-                    counter1++;
-                }
-                if (counter1 == (fieldSizeX - 1)) {
-                    for (int yyy = 0; yyy < fieldSizeY; yyy++) {
-                        if (field[xx][yyy] == DOT_EMPTY)
-                        {
-                            field[xx][yyy] = DOT_AI;
-                            f1 = 1;
-                        }
-                    }
-                }
-            }
-        }
-
-        // проверка по вертиткали
-        int counter2;
-        int f2 = 0;
-        for (int yy = 0; yy < fieldSizeX; yy++) {
-            counter2 = 0;
-            for (int xx = 0; xx < fieldSizeY; xx++) {
-                if (field[xx][yy] == DOT_HUMAN)
-                {
-                    counter2++;
-                }
-                if (counter2 == (fieldSizeX - 1)) {
-                    for (int xxx = 0; xxx < fieldSizeY; xxx++) {
-                        if (field[xxx][yy] == DOT_EMPTY)
-                        {
-                            field[xxx][yy] = DOT_AI;
-                            f2 = 1;
-                        }
-                    }
-                }
-            }
-        }
-
-        // проверка по диагонали1
-        int counter3 = 0;
-        int f3 = 0;
-        int x_new = 0;
-        int y_new = 0;
-        for (int xx = 0; xx < fieldSizeX; xx++) {
-            for (int yy = fieldSizeY-1-xx; yy >= 0; yy--) {
-                if (field[xx][yy] == DOT_HUMAN)
-                {
-                    counter3++;
-                }
-                if (field[xx][yy] == DOT_EMPTY)
-                {
-                    x_new = xx;
-                    y_new = yy;
-                }
-                if (counter3 == (fieldSizeX - 1)) {
-                    f3 = 1;
-                    field[x_new][y_new] = DOT_AI;
-                }
-            }
-        }
-
-        if (f1 == 0 && f2 == 0 && f3 == 0) {
-            int x;
-            int y;
-            do {
-                x = RANDOM.nextInt(fieldSizeX);
-                y = RANDOM.nextInt(fieldSizeY);
-            } while (!isEmptyCell(x, y));
-            field[y][x] = DOT_AI;
-        }
-
-
+        int x;
+        int y;
+        do {
+            x = RANDOM.nextInt(fieldSizeX);
+            y = RANDOM.nextInt(fieldSizeY);
+        } while (!isEmptyCell(x, y));
+        field[y][x] = DOT_AI;
     }
 
     private static boolean checkDraw() {
@@ -156,35 +86,45 @@ public class Lesson3_TicTacToe_SmartComputer {
     private static boolean checkWin(char c) {
 
         int counter;
+        int br;
+        int cell;
         for (int x = 0; x < fieldSizeX; x++) {
             counter = 0;
+            br = 0;
+            cell = 1;
             for (int y = 0; y < fieldSizeY; y++) {
                 if (field[x][y] == c) counter++;
+                if (field[x][y] != c && (fieldSizeX - numToWin) < cell) br = 1;
+                if ((counter == numToWin || counter == fieldSizeX) && br == 0) return true;
+                cell++;
             }
-            if (counter == fieldSizeX) return true;
         }
 
         for (int y = 0; y < fieldSizeY; y++) {
             counter = 0;
+            br = 0;
+            cell = 1;
             for (int x = 0; x < fieldSizeX; x++) {
                 if (field[x][y] == c) counter++;
+                if (field[x][y] != c && (fieldSizeX - numToWin) < cell) br = 1;
+                if ((counter == numToWin || counter == fieldSizeY) && br == 0) return true;
+                cell++;
             }
-            if (counter == fieldSizeY) return true;
         }
 
-        // не доработано
+        // ниже не доработан
         counter = 0;
         for (int x=0; x < fieldSizeX; x++) {
             for (int y = fieldSizeY-1-x; y >= 0; y--) {
                 if (field[x][y] == c) counter++;
             }
-            if (counter == fieldSizeY) return true;
+            if (counter == numToWin) return true;
         }
 
         counter = 0;
         for (int x=0; x < fieldSizeX; x++) {
             if (field[x][x] == c) counter++;
-            if (counter == fieldSizeY) return true;
+            if (counter == numToWin) return true;
         }
         return false;
     }
