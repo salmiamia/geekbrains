@@ -64,6 +64,7 @@ public class Lesson2 {
 
         min = b[0];
         max = b[0];
+
        for (int i = 0; i < b.length; i++) {
                 if (b[i] < min) min = b[i];
                 if (b[i] > max) max = b[i];
@@ -128,5 +129,3 @@ public class Lesson2 {
         }
     }
 }
-
-
